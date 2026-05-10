@@ -1,7 +1,3 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace StoreManager
 {
     public partial class MainForm : Form
@@ -20,7 +16,7 @@ namespace StoreManager
         }
 
         // --- HÀM XỬ LÝ CHUYỂN MÀN HÌNH (USER CONTROL) ---
-        private void AddUserControl(UserControl userControl)
+        public void AddUserControl(UserControl userControl)
         {
             // 1. Dọn dẹp màn hình cũ nếu có để giải phóng bộ nhớ
             if (currentControl != null)
@@ -94,19 +90,19 @@ namespace StoreManager
         private void btnCustomer_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            // AddUserControl(new UCCustomer()); // Bỏ comment (//) sau khi tạo xong UCCustomer
+            AddUserControl(new UCCustomer());
         }
 
         private void btnProduct_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            // AddUserControl(new UCProduct()); // Bỏ comment (//) sau khi tạo xong UCProduct
+            AddUserControl(new UCProduct());
         }
 
         private void btnInvoice_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            // AddUserControl(new UCInvoice()); // Bỏ comment (//) sau khi tạo xong UCInvoice
+            AddUserControl(new UCInvoice());
         }
 
         private void btnAccount_Click(object sender, EventArgs e)

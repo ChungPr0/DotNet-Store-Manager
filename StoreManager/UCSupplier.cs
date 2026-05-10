@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using StoreManager.Utils;
 
 namespace StoreManager
@@ -109,7 +109,7 @@ namespace StoreManager
         }
 
         // --- 3. MAIN ACTIONS ---
-        private void PrepareCreate()
+        public void PrepareCreate()
         {
             lstSupplier.ClearSelected();
             selectedSupID = -1;

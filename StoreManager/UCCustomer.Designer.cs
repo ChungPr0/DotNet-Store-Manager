@@ -1,6 +1,6 @@
 ﻿namespace StoreManager
 {
-    partial class UCEmployee
+    partial class UCCustomer
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -19,7 +19,7 @@
         {
             panel1 = new Panel();
             panel4 = new Panel();
-            lstEmployee = new ListBox();
+            lstCustomer = new ListBox();
             panel3 = new Panel();
             txtSearch = new TextBox();
             btnSort = new Button();
@@ -30,20 +30,8 @@
             label4 = new Label();
             txtName = new TextBox();
             txtPhone = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
-            dtpDOB = new DateTimePicker();
-            cbRole = new ComboBox();
             label8 = new Label();
             txtAddress = new TextBox();
-            label11 = new Label();
-            label12 = new Label();
-            dtpStartDate = new DateTimePicker();
-            txtSalary = new TextBox();
-            label10 = new Label();
-            label9 = new Label();
-            txtUsername = new TextBox();
-            txtPassword = new TextBox();
             label2 = new Label();
             panel5 = new Panel();
             btnSave = new Button();
@@ -66,7 +54,7 @@
             panel1.Size = new Size(250, 603);
             panel1.TabIndex = 0;
 
-            panel4.Controls.Add(lstEmployee);
+            panel4.Controls.Add(lstCustomer);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 80);
             panel4.Name = "panel4";
@@ -74,17 +62,17 @@
             panel4.Size = new Size(250, 523);
             panel4.TabIndex = 4;
 
-            lstEmployee.BackColor = Color.White;
-            lstEmployee.BorderStyle = BorderStyle.FixedSingle;
-            lstEmployee.Dock = DockStyle.Fill;
-            lstEmployee.Font = new Font("Segoe UI", 11F);
-            lstEmployee.ForeColor = Color.FromArgb(44, 62, 80);
-            lstEmployee.FormattingEnabled = true;
-            lstEmployee.ItemHeight = 25;
-            lstEmployee.Location = new Point(10, 10);
-            lstEmployee.Name = "lstEmployee";
-            lstEmployee.Size = new Size(230, 503);
-            lstEmployee.TabIndex = 0;
+            lstCustomer.BackColor = Color.White;
+            lstCustomer.BorderStyle = BorderStyle.FixedSingle;
+            lstCustomer.Dock = DockStyle.Fill;
+            lstCustomer.Font = new Font("Segoe UI", 11F);
+            lstCustomer.ForeColor = Color.FromArgb(44, 62, 80);
+            lstCustomer.FormattingEnabled = true;
+            lstCustomer.ItemHeight = 25;
+            lstCustomer.Location = new Point(10, 10);
+            lstCustomer.Name = "lstCustomer";
+            lstCustomer.Size = new Size(230, 503);
+            lstCustomer.TabIndex = 0;
 
             panel3.Controls.Add(txtSearch);
             panel3.Controls.Add(btnSort);
@@ -141,44 +129,27 @@
             tableLayoutPanel1.Controls.Add(label4, 1, 0);
             tableLayoutPanel1.Controls.Add(txtName, 0, 1);
             tableLayoutPanel1.Controls.Add(txtPhone, 1, 1);
-            tableLayoutPanel1.Controls.Add(label6, 0, 2);
-            tableLayoutPanel1.Controls.Add(label5, 1, 2);
-            tableLayoutPanel1.Controls.Add(dtpDOB, 0, 3);
-            tableLayoutPanel1.Controls.Add(cbRole, 1, 3);
-            tableLayoutPanel1.Controls.Add(label8, 0, 4);
-            tableLayoutPanel1.Controls.Add(txtAddress, 0, 5);
-            tableLayoutPanel1.Controls.Add(label11, 0, 6);
-            tableLayoutPanel1.Controls.Add(label12, 1, 6);
-            tableLayoutPanel1.Controls.Add(dtpStartDate, 0, 7);
-            tableLayoutPanel1.Controls.Add(txtSalary, 1, 7);
-            tableLayoutPanel1.Controls.Add(label10, 0, 8);
-            tableLayoutPanel1.Controls.Add(label9, 1, 8);
-            tableLayoutPanel1.Controls.Add(txtUsername, 0, 9);
-            tableLayoutPanel1.Controls.Add(txtPassword, 1, 9);
+            tableLayoutPanel1.Controls.Add(label8, 0, 2);
+            tableLayoutPanel1.Controls.Add(txtAddress, 0, 3);
             tableLayoutPanel1.Location = new Point(35, 90);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 10;
+            tableLayoutPanel1.RowCount = 5;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
-            tableLayoutPanel1.Size = new Size(860, 370);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(860, 200);
             tableLayoutPanel1.TabIndex = 47;
 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label3.ForeColor = Color.FromArgb(100, 116, 139);
-            label3.Location = new Point(3, 0);
+            label3.Location = new Point(0, 0);
             label3.Name = "label3";
-            label3.Size = new Size(92, 20);
+            label3.Size = new Size(150, 20);
             label3.TabIndex = 42;
-            label3.Text = "HỌ VÀ TÊN:";
+            label3.Text = "TÊN KHÁCH HÀNG:";
 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -192,62 +163,24 @@
 
             txtName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(3, 28);
-            txtName.Margin = new Padding(3, 3, 15, 3);
+            txtName.Location = new Point(0, 28);
+            txtName.Margin = new Padding(0, 3, 15, 3);
             txtName.Name = "txtName";
-            txtName.Size = new Size(412, 30);
+            txtName.Size = new Size(415, 30);
             txtName.TabIndex = 45;
 
             txtPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPhone.Font = new Font("Segoe UI", 10F);
             txtPhone.Location = new Point(445, 28);
-            txtPhone.Margin = new Padding(15, 3, 3, 3);
+            txtPhone.Margin = new Padding(15, 3, 0, 3);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(412, 30);
+            txtPhone.Size = new Size(415, 30);
             txtPhone.TabIndex = 41;
-
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label6.ForeColor = Color.FromArgb(100, 116, 139);
-            label6.Location = new Point(3, 70);
-            label6.Name = "label6";
-            label6.Size = new Size(95, 20);
-            label6.TabIndex = 38;
-            label6.Text = "NGÀY SINH:";
-
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label5.ForeColor = Color.FromArgb(100, 116, 139);
-            label5.Location = new Point(445, 70);
-            label5.Margin = new Padding(15, 0, 3, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(72, 20);
-            label5.TabIndex = 39;
-            label5.Text = "VAI TRÒ:";
-
-            dtpDOB.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dtpDOB.CustomFormat = "dd/MM/yyyy";
-            dtpDOB.Font = new Font("Segoe UI", 10F);
-            dtpDOB.Format = DateTimePickerFormat.Custom;
-            dtpDOB.Location = new Point(3, 98);
-            dtpDOB.Margin = new Padding(3, 3, 15, 3);
-            dtpDOB.Name = "dtpDOB";
-            dtpDOB.Size = new Size(412, 30);
-            dtpDOB.TabIndex = 43;
-
-            cbRole.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cbRole.Font = new Font("Segoe UI", 10F);
-            cbRole.FormattingEnabled = true;
-            cbRole.Location = new Point(445, 98);
-            cbRole.Margin = new Padding(15, 3, 3, 3);
-            cbRole.Name = "cbRole";
-            cbRole.Size = new Size(412, 31);
-            cbRole.TabIndex = 44;
 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(100, 116, 139);
-            label8.Location = new Point(3, 140);
+            label8.Location = new Point(0, 70);
             label8.Name = "label8";
             label8.Size = new Size(69, 20);
             label8.TabIndex = 36;
@@ -256,93 +189,21 @@
 
             txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(3, 168);
+            txtAddress.Location = new Point(0, 98);
+            txtAddress.Margin = new Padding(0, 3, 0, 3);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(854, 30);
+            txtAddress.Size = new Size(860, 30);
             txtAddress.TabIndex = 37;
             tableLayoutPanel1.SetColumnSpan(txtAddress, 2);
-
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label11.ForeColor = Color.FromArgb(100, 116, 139);
-            label11.Location = new Point(3, 210);
-            label11.Name = "label11";
-            label11.Size = new Size(127, 20);
-            label11.TabIndex = 29;
-            label11.Text = "NGÀY VÀO LÀM:";
-
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label12.ForeColor = Color.FromArgb(100, 116, 139);
-            label12.Location = new Point(445, 210);
-            label12.Margin = new Padding(15, 0, 3, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(179, 20);
-            label12.TabIndex = 30;
-            label12.Text = "LƯƠNG CƠ BẢN (VNĐ):";
-
-            dtpStartDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dtpStartDate.CustomFormat = "dd/MM/yyyy";
-            dtpStartDate.Font = new Font("Segoe UI", 10F);
-            dtpStartDate.Format = DateTimePickerFormat.Custom;
-            dtpStartDate.Location = new Point(3, 238);
-            dtpStartDate.Margin = new Padding(3, 3, 15, 3);
-            dtpStartDate.Name = "dtpStartDate";
-            dtpStartDate.Size = new Size(412, 30);
-            dtpStartDate.TabIndex = 31;
-
-            txtSalary.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtSalary.Font = new Font("Segoe UI", 10F);
-            txtSalary.Location = new Point(445, 238);
-            txtSalary.Margin = new Padding(15, 3, 3, 3);
-            txtSalary.Name = "txtSalary";
-            txtSalary.Size = new Size(412, 30);
-            txtSalary.TabIndex = 28;
-
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label10.ForeColor = Color.FromArgb(100, 116, 139);
-            label10.Location = new Point(3, 280);
-            label10.Name = "label10";
-            label10.Size = new Size(96, 20);
-            label10.TabIndex = 34;
-            label10.Text = "TÀI KHOẢN:";
-
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label9.ForeColor = Color.FromArgb(100, 116, 139);
-            label9.Location = new Point(445, 280);
-            label9.Margin = new Padding(15, 0, 3, 0);
-            label9.Name = "label9";
-            label9.Size = new Size(94, 20);
-            label9.TabIndex = 32;
-            label9.Text = "MẬT KHẨU:";
-
-            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Font = new Font("Segoe UI", 10F);
-            txtUsername.Location = new Point(3, 308);
-            txtUsername.Margin = new Padding(3, 3, 15, 3);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(412, 30);
-            txtUsername.TabIndex = 35;
-
-            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Font = new Font("Segoe UI", 10F);
-            txtPassword.Location = new Point(445, 308);
-            txtPassword.Margin = new Padding(15, 3, 3, 3);
-            txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(412, 30);
-            txtPassword.TabIndex = 33;
-            txtPassword.UseSystemPasswordChar = true;
 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             label2.ForeColor = Color.FromArgb(44, 62, 80);
             label2.Location = new Point(35, 30);
             label2.Name = "label2";
-            label2.Size = new Size(365, 41);
+            label2.Size = new Size(393, 41);
             label2.TabIndex = 46;
-            label2.Text = "THÔNG TIN NHÂN VIÊN";
+            label2.Text = "THÔNG TIN KHÁCH HÀNG";
 
             panel5.BackColor = Color.WhiteSmoke;
             panel5.Controls.Add(btnSave);
@@ -401,7 +262,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel2);
             Controls.Add(panel1);
-            Name = "UCEmployee";
+            Name = "UCCustomer";
             Size = new Size(1182, 603);
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -424,7 +285,7 @@
         private Panel panel4;
         private Panel panel3;
         private Button btnSort;
-        private ListBox lstEmployee;
+        private ListBox lstCustomer;
         private Label label2;
         private Panel panel5;
         private Button btnSave;
@@ -432,22 +293,10 @@
         private Button btnAdd;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label3;
-        private TextBox txtName;
         private Label label4;
+        private TextBox txtName;
         private TextBox txtPhone;
-        private Label label6;
-        private DateTimePicker dtpStartDate;
         private Label label8;
         private TextBox txtAddress;
-        private Label label11;
-        private Label label12;
-        private DateTimePicker dtpDOB;
-        private Label label9;
-        private TextBox txtPassword;
-        private Label label10;
-        private TextBox txtUsername;
-        private ComboBox cbRole;
-        private TextBox txtSalary;
-        private Label label5;
     }
 }

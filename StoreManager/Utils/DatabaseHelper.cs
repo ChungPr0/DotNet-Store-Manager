@@ -1,13 +1,12 @@
 ﻿
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace StoreManager.Utils
 {
     public class DatabaseHelper
     {
-        // 1. Đặt Connection String của bạn ở đây
-        private readonly string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=StoreManager;Integrated Security=True";
+        string connectionString = "Server=.\\SQLEXPRESS;Database=StoreManager;Integrated Security=True;TrustServerCertificate=True;";
 
         // Sử dụng pattern Singleton để dễ gọi hàm từ bất kỳ đâu mà không cần new nhiều lần
         private static DatabaseHelper instance;
@@ -23,7 +22,6 @@ namespace StoreManager.Utils
         // ======================================================
         // HÀM 1: Dùng cho câu lệnh SELECT (Trả về 1 bảng dữ liệu)
         // ======================================================
-        [Obsolete]
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
             DataTable dataTable = new DataTable();
@@ -50,7 +48,6 @@ namespace StoreManager.Utils
         // ======================================================
         // HÀM 2: Dùng cho INSERT, UPDATE, DELETE (Trả về số dòng thành công)
         // ======================================================
-        [Obsolete]
         public int ExecuteNonQuery(string query, SqlParameter[] parameters = null)
         {
             int affectedRows = 0;
@@ -72,7 +69,6 @@ namespace StoreManager.Utils
         // ======================================================
         // HÀM 3: Dùng cho SELECT COUNT, SUM, MAX... (Trả về 1 ô dữ liệu duy nhất)
         // ======================================================
-        [Obsolete]
         public object ExecuteScalar(string query, SqlParameter[] parameters = null)
         {
             object result = null;

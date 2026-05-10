@@ -2,15 +2,8 @@
 {
     partial class UCSupplier
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,15 +15,10 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-
             panel1 = new Panel();
             panel4 = new Panel();
             lstSupplier = new ListBox();
@@ -39,23 +27,17 @@
             btnSort = new Button();
             label1 = new Label();
             panel2 = new Panel();
-            panel5 = new Panel();
-            btnSave = new Button();
-            btnDelete = new Button();
-            btnAdd = new Button();
-
-            label2 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             label3 = new Label();
             txtName = new TextBox();
-            label4 = new Label();
-            txtPhone = new TextBox();
             label6 = new Label();
+            label4 = new Label();
             dtpStartDate = new DateTimePicker();
+            txtPhone = new TextBox();
             label8 = new Label();
             txtAddress = new TextBox();
             label9 = new Label();
             txtDescription = new TextBox();
-
             label10 = new Label();
             dgvProducts = new DataGridView();
             colId = new DataGridViewTextBoxColumn();
@@ -63,17 +45,20 @@
             colPrice = new DataGridViewTextBoxColumn();
             colStock = new DataGridViewTextBoxColumn();
             colSold = new DataGridViewTextBoxColumn();
-
+            label2 = new Label();
+            panel5 = new Panel();
+            btnSave = new Button();
+            btnDelete = new Button();
+            btnAdd = new Button();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
-            panel5.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
+            panel5.SuspendLayout();
             SuspendLayout();
-            // 
-            // panel1
-            // 
+
             panel1.BackColor = Color.FromArgb(240, 244, 247);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
@@ -82,9 +67,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(250, 603);
             panel1.TabIndex = 0;
-            // 
-            // panel4
-            // 
+
             panel4.Controls.Add(lstSupplier);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 80);
@@ -92,9 +75,7 @@
             panel4.Padding = new Padding(10);
             panel4.Size = new Size(250, 523);
             panel4.TabIndex = 4;
-            // 
-            // lstSupplier
-            // 
+
             lstSupplier.BackColor = Color.White;
             lstSupplier.BorderStyle = BorderStyle.FixedSingle;
             lstSupplier.Dock = DockStyle.Fill;
@@ -106,9 +87,7 @@
             lstSupplier.Name = "lstSupplier";
             lstSupplier.Size = new Size(230, 503);
             lstSupplier.TabIndex = 0;
-            // 
-            // panel3
-            // 
+
             panel3.Controls.Add(txtSearch);
             panel3.Controls.Add(btnSort);
             panel3.Controls.Add(label1);
@@ -117,17 +96,13 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(250, 80);
             panel3.TabIndex = 3;
-            // 
-            // txtSearch
-            // 
+
             txtSearch.Font = new Font("Segoe UI", 10F);
             txtSearch.Location = new Point(14, 35);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(168, 30);
             txtSearch.TabIndex = 0;
-            // 
-            // btnSort
-            // 
+
             btnSort.BackColor = Color.FromArgb(149, 165, 166);
             btnSort.Cursor = Cursors.Hand;
             btnSort.FlatAppearance.BorderSize = 0;
@@ -140,9 +115,7 @@
             btnSort.TabIndex = 2;
             btnSort.Text = "A-Z";
             btnSort.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
+
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(100, 116, 139);
@@ -151,22 +124,9 @@
             label1.Size = new Size(76, 20);
             label1.TabIndex = 1;
             label1.Text = "TÌM KIẾM";
-            // 
-            // panel2
-            // 
+
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(dgvProducts);
-            panel2.Controls.Add(label10);
-            panel2.Controls.Add(txtDescription);
-            panel2.Controls.Add(label9);
-            panel2.Controls.Add(txtAddress);
-            panel2.Controls.Add(label8);
-            panel2.Controls.Add(dtpStartDate);
-            panel2.Controls.Add(label6);
-            panel2.Controls.Add(txtPhone);
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(txtName);
-            panel2.Controls.Add(label3);
+            panel2.Controls.Add(tableLayoutPanel1);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(panel5);
             panel2.Dock = DockStyle.Fill;
@@ -174,9 +134,201 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(932, 603);
             panel2.TabIndex = 1;
-            // 
-            // panel5
-            // 
+
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(label3, 0, 0);
+            tableLayoutPanel1.Controls.Add(txtName, 0, 1);
+            tableLayoutPanel1.Controls.Add(label6, 0, 2);
+            tableLayoutPanel1.Controls.Add(label4, 1, 2);
+            tableLayoutPanel1.Controls.Add(dtpStartDate, 0, 3);
+            tableLayoutPanel1.Controls.Add(txtPhone, 1, 3);
+            tableLayoutPanel1.Controls.Add(label8, 0, 4);
+            tableLayoutPanel1.Controls.Add(txtAddress, 0, 5);
+            tableLayoutPanel1.Controls.Add(label9, 0, 6);
+            tableLayoutPanel1.Controls.Add(txtDescription, 0, 7);
+            tableLayoutPanel1.Controls.Add(label10, 0, 8);
+            tableLayoutPanel1.Controls.Add(dgvProducts, 0, 9);
+            tableLayoutPanel1.Location = new Point(35, 90);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 10;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 75F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(860, 420);
+            tableLayoutPanel1.TabIndex = 47;
+
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(100, 116, 139);
+            label3.Location = new Point(3, 0);
+            label3.Margin = new Padding(3, 0, 3, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(157, 20);
+            label3.TabIndex = 42;
+            label3.Text = "TÊN NHÀ CUNG CẤP:";
+            tableLayoutPanel1.SetColumnSpan(label3, 2);
+
+            txtName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtName.Font = new Font("Segoe UI", 10F);
+            txtName.Location = new Point(3, 28);
+            txtName.Margin = new Padding(3, 3, 3, 3);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(854, 30);
+            txtName.TabIndex = 45;
+            tableLayoutPanel1.SetColumnSpan(txtName, 2);
+
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label6.ForeColor = Color.FromArgb(100, 116, 139);
+            label6.Location = new Point(3, 70);
+            label6.Margin = new Padding(3, 0, 3, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(191, 20);
+            label6.TabIndex = 38;
+            label6.Text = "NGÀY BẮT ĐẦU HỢP TÁC:";
+
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label4.ForeColor = Color.FromArgb(100, 116, 139);
+            label4.Location = new Point(445, 70);
+            label4.Margin = new Padding(15, 0, 3, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(123, 20);
+            label4.TabIndex = 40;
+            label4.Text = "SỐ ĐIỆN THOẠI:";
+
+            dtpStartDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dtpStartDate.CustomFormat = "dd/MM/yyyy";
+            dtpStartDate.Font = new Font("Segoe UI", 10F);
+            dtpStartDate.Format = DateTimePickerFormat.Custom;
+            dtpStartDate.Location = new Point(3, 98);
+            dtpStartDate.Margin = new Padding(3, 3, 15, 3);
+            dtpStartDate.Name = "dtpStartDate";
+            dtpStartDate.Size = new Size(412, 30);
+            dtpStartDate.TabIndex = 43;
+
+            txtPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPhone.Font = new Font("Segoe UI", 10F);
+            txtPhone.Location = new Point(445, 98);
+            txtPhone.Margin = new Padding(15, 3, 3, 3);
+            txtPhone.Name = "txtPhone";
+            txtPhone.Size = new Size(412, 30);
+            txtPhone.TabIndex = 41;
+
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label8.ForeColor = Color.FromArgb(100, 116, 139);
+            label8.Location = new Point(3, 140);
+            label8.Margin = new Padding(3, 0, 3, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(69, 20);
+            label8.TabIndex = 36;
+            label8.Text = "ĐỊA CHỈ:";
+            tableLayoutPanel1.SetColumnSpan(label8, 2);
+
+            txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtAddress.Font = new Font("Segoe UI", 10F);
+            txtAddress.Location = new Point(3, 168);
+            txtAddress.Margin = new Padding(3, 3, 3, 3);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(854, 30);
+            txtAddress.TabIndex = 37;
+            tableLayoutPanel1.SetColumnSpan(txtAddress, 2);
+
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label9.ForeColor = Color.FromArgb(100, 116, 139);
+            label9.Location = new Point(3, 210);
+            label9.Margin = new Padding(3, 0, 3, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(137, 20);
+            label9.TabIndex = 32;
+            label9.Text = "MÔ TẢ / GHI CHÚ:";
+            tableLayoutPanel1.SetColumnSpan(label9, 2);
+
+            txtDescription.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtDescription.Font = new Font("Segoe UI", 10F);
+            txtDescription.Location = new Point(3, 238);
+            txtDescription.Margin = new Padding(3, 3, 3, 3);
+            txtDescription.Multiline = true;
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(854, 69);
+            txtDescription.TabIndex = 33;
+            tableLayoutPanel1.SetColumnSpan(txtDescription, 2);
+
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label10.ForeColor = Color.FromArgb(100, 116, 139);
+            label10.Location = new Point(3, 310);
+            label10.Margin = new Padding(3, 0, 3, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(198, 20);
+            label10.TabIndex = 34;
+            label10.Text = "CÁC SẢN PHẨM CUNG CẤP";
+            tableLayoutPanel1.SetColumnSpan(label10, 2);
+
+            dgvProducts.BackgroundColor = Color.White;
+            dgvProducts.BorderStyle = BorderStyle.FixedSingle;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(240, 244, 247);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProducts.Columns.AddRange(new DataGridViewColumn[] { colId, colName, colPrice, colStock, colSold });
+            dgvProducts.Dock = DockStyle.Fill;
+            dgvProducts.EnableHeadersVisualStyles = false;
+            dgvProducts.Location = new Point(3, 338);
+            dgvProducts.Margin = new Padding(3, 3, 3, 3);
+            dgvProducts.Name = "dgvProducts";
+            dgvProducts.RowHeadersVisible = false;
+            dgvProducts.Size = new Size(854, 79);
+            dgvProducts.TabIndex = 48;
+            tableLayoutPanel1.SetColumnSpan(dgvProducts, 2);
+
+            colId.DataPropertyName = "pro_ID";
+            colId.HeaderText = "Mã SP";
+            colId.Width = 70;
+
+            colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colName.DataPropertyName = "pro_name";
+            colName.HeaderText = "Tên Sản Phẩm";
+
+            colPrice.DataPropertyName = "pro_price";
+            dataGridViewCellStyle2.Format = "N0";
+            colPrice.DefaultCellStyle = dataGridViewCellStyle2;
+            colPrice.HeaderText = "Giá Bán";
+            colPrice.Width = 110;
+
+            colStock.DataPropertyName = "pro_count";
+            colStock.HeaderText = "Tồn Kho";
+            colStock.Width = 90;
+
+            colSold.DataPropertyName = "sold_count";
+            colSold.HeaderText = "Đã Bán";
+            colSold.Width = 90;
+
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(44, 62, 80);
+            label2.Location = new Point(35, 30);
+            label2.Name = "label2";
+            label2.Size = new Size(405, 41);
+            label2.TabIndex = 46;
+            label2.Text = "THÔNG TIN NHÀ CUNG CẤP";
+
             panel5.BackColor = Color.WhiteSmoke;
             panel5.Controls.Add(btnSave);
             panel5.Controls.Add(btnDelete);
@@ -187,9 +339,7 @@
             panel5.Padding = new Padding(10);
             panel5.Size = new Size(932, 80);
             panel5.TabIndex = 27;
-            // 
-            // btnSave
-            // 
+
             btnSave.BackColor = Color.FromArgb(46, 204, 113);
             btnSave.Cursor = Cursors.Hand;
             btnSave.Dock = DockStyle.Right;
@@ -203,9 +353,7 @@
             btnSave.TabIndex = 2;
             btnSave.Text = "LƯU";
             btnSave.UseVisualStyleBackColor = false;
-            // 
-            // btnDelete
-            // 
+
             btnDelete.BackColor = Color.FromArgb(231, 76, 60);
             btnDelete.Cursor = Cursors.Hand;
             btnDelete.Dock = DockStyle.Right;
@@ -219,9 +367,7 @@
             btnDelete.TabIndex = 1;
             btnDelete.Text = "XÓA";
             btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnAdd
-            // 
+
             btnAdd.BackColor = Color.FromArgb(52, 152, 219);
             btnAdd.Cursor = Cursors.Hand;
             btnAdd.Dock = DockStyle.Right;
@@ -235,183 +381,7 @@
             btnAdd.TabIndex = 0;
             btnAdd.Text = "THÊM";
             btnAdd.UseVisualStyleBackColor = false;
-            // 
-            // label2 (Tiêu đề)
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            label2.ForeColor = Color.FromArgb(44, 62, 80);
-            label2.Location = new Point(35, 30);
-            label2.Name = "label2";
-            label2.Size = new Size(405, 41);
-            label2.TabIndex = 46;
-            label2.Text = "THÔNG TIN NHÀ CUNG CẤP";
-            // 
-            // label3 (Tên)
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label3.ForeColor = Color.FromArgb(100, 116, 139);
-            label3.Location = new Point(40, 90);
-            label3.Name = "label3";
-            label3.Size = new Size(157, 20);
-            label3.TabIndex = 42;
-            label3.Text = "TÊN NHÀ CUNG CẤP:";
-            // 
-            // txtName
-            // 
-            txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(40, 115);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(280, 30);
-            txtName.TabIndex = 45;
-            // 
-            // label4 (SĐT)
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label4.ForeColor = Color.FromArgb(100, 116, 139);
-            label4.Location = new Point(350, 90);
-            label4.Name = "label4";
-            label4.Size = new Size(123, 20);
-            label4.TabIndex = 40;
-            label4.Text = "SỐ ĐIỆN THOẠI:";
-            // 
-            // txtPhone
-            // 
-            txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(350, 115);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(280, 30);
-            txtPhone.TabIndex = 41;
-            // 
-            // label6 (Ngày hợp tác)
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label6.ForeColor = Color.FromArgb(100, 116, 139);
-            label6.Location = new Point(40, 165);
-            label6.Name = "label6";
-            label6.Size = new Size(191, 20);
-            label6.TabIndex = 38;
-            label6.Text = "NGÀY BẮT ĐẦU HỢP TÁC:";
-            // 
-            // dtpStartDate
-            // 
-            dtpStartDate.CustomFormat = "dd/MM/yyyy";
-            dtpStartDate.Font = new Font("Segoe UI", 10F);
-            dtpStartDate.Format = DateTimePickerFormat.Custom;
-            dtpStartDate.Location = new Point(40, 190);
-            dtpStartDate.Name = "dtpStartDate";
-            dtpStartDate.Size = new Size(280, 30);
-            dtpStartDate.TabIndex = 43;
-            // 
-            // label8 (Địa chỉ)
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label8.ForeColor = Color.FromArgb(100, 116, 139);
-            label8.Location = new Point(40, 240);
-            label8.Name = "label8";
-            label8.Size = new Size(69, 20);
-            label8.TabIndex = 36;
-            label8.Text = "ĐỊA CHỈ:";
-            // 
-            // txtAddress
-            // 
-            txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(40, 265);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(590, 30);
-            txtAddress.TabIndex = 37;
-            // 
-            // label9 (Mô tả)
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label9.ForeColor = Color.FromArgb(100, 116, 139);
-            label9.Location = new Point(40, 315);
-            label9.Name = "label9";
-            label9.Size = new Size(137, 20);
-            label9.TabIndex = 32;
-            label9.Text = "MÔ TẢ / GHI CHÚ:";
-            // 
-            // txtDescription
-            // 
-            txtDescription.Font = new Font("Segoe UI", 10F);
-            txtDescription.Location = new Point(40, 340);
-            txtDescription.Multiline = true;
-            txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(590, 55);
-            txtDescription.TabIndex = 33;
-            // 
-            // label10 (Bảng Sản Phẩm)
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label10.ForeColor = Color.FromArgb(100, 116, 139);
-            label10.Location = new Point(40, 410);
-            label10.Name = "label10";
-            label10.Size = new Size(198, 20);
-            label10.TabIndex = 34;
-            label10.Text = "CÁC SẢN PHẨM CUNG CẤP";
-            // 
-            // dgvProducts
-            // 
-            dgvProducts.BackgroundColor = Color.White;
-            dgvProducts.BorderStyle = BorderStyle.FixedSingle;
 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(240, 244, 247);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(44, 62, 80);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducts.EnableHeadersVisualStyles = false;
-
-            dgvProducts.Columns.AddRange(new DataGridViewColumn[] { colId, colName, colPrice, colStock, colSold });
-            dgvProducts.Location = new Point(40, 435);
-            dgvProducts.Name = "dgvProducts";
-            dgvProducts.RowHeadersVisible = false;
-            dgvProducts.Size = new Size(700, 75); // Chiều cao vừa khít phía trên footer
-            dgvProducts.TabIndex = 47;
-            // 
-            // colId
-            // 
-            colId.DataPropertyName = "pro_ID";
-            colId.HeaderText = "Mã SP";
-            colId.Width = 70;
-            // 
-            // colName
-            // 
-            colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colName.DataPropertyName = "pro_name";
-            colName.HeaderText = "Tên Sản Phẩm";
-            // 
-            // colPrice
-            // 
-            colPrice.DataPropertyName = "pro_price";
-            dataGridViewCellStyle2.Format = "N0";
-            colPrice.DefaultCellStyle = dataGridViewCellStyle2;
-            colPrice.HeaderText = "Giá Bán";
-            colPrice.Width = 110;
-            // 
-            // colStock
-            // 
-            colStock.DataPropertyName = "pro_count";
-            colStock.HeaderText = "Tồn Kho";
-            colStock.Width = 90;
-            // 
-            // colSold
-            // 
-            colSold.DataPropertyName = "sold_count";
-            colSold.HeaderText = "Đã Bán";
-            colSold.Width = 90;
-            // 
-            // UCSupplier
-            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel2);
@@ -424,8 +394,10 @@
             panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            panel5.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -444,14 +416,13 @@
         private Button btnSave;
         private Button btnDelete;
         private Button btnAdd;
-
-        // Khai báo biến
+        private TableLayoutPanel tableLayoutPanel1;
         private Label label3;
         private TextBox txtName;
-        private Label label6;
-        private DateTimePicker dtpStartDate;
         private Label label4;
         private TextBox txtPhone;
+        private Label label6;
+        private DateTimePicker dtpStartDate;
         private Label label8;
         private TextBox txtAddress;
         private Label label9;
