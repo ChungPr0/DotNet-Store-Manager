@@ -29,7 +29,7 @@ namespace StoreManager.Utils
             this.DoubleBuffered = true;
         }
 
-        // Hàm trộn màu giống y hệt mixColors() bên Java
+        // Hàm trộn màu
         private Color MixColor(Color baseColor, Color mixColor, double ratio)
         {
             int r = (int)(mixColor.R * ratio + baseColor.R * (1 - ratio));
@@ -38,7 +38,7 @@ namespace StoreManager.Utils
             return Color.FromArgb(r, g, b);
         }
 
-        // Hàm vẽ bo góc (Tương đương RoundRectangle2D bên Java)
+        // Hàm vẽ bo góc
         private GraphicsPath GetRoundPath(Rectangle rect, int radius)
         {
             GraphicsPath path = new GraphicsPath();
@@ -66,7 +66,7 @@ namespace StoreManager.Utils
             // Xóa nền cũ
             g.Clear(this.Parent != null ? this.Parent.BackColor : Color.White);
 
-            // DÙNG BACKCOLOR ĐỂ LẤY MÀU NÚT (Sẽ ăn theo màu bạn set trong Designer)
+            // DÙNG BACKCOLOR ĐỂ LẤY MÀU NÚT
             Color baseColor = this.BackColor == Color.Transparent ? Color.FromArgb(46, 204, 113) : this.BackColor;
 
             // Tính toán màu sắc
@@ -74,7 +74,7 @@ namespace StoreManager.Utils
             Color hoverColor = MixColor(baseColor, Color.White, 0.15);
             Color currentColor = isHovered ? hoverColor : baseColor;
 
-            // LẤY MARGIN ĐỂ TẠO KHOẢNG CÁCH (Giúp các nút không dính nhau khi dùng Dock)
+            // LẤY MARGIN ĐỂ TẠO KHOẢNG CÁCH
             int mLeft = this.Margin.Left;
             int mTop = this.Margin.Top;
             int mRight = this.Margin.Right;

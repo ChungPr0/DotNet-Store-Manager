@@ -86,5 +86,28 @@ namespace StoreManager.Utils
             }
             return result;
         }
+
+        // ======================================================
+        // HÀM 4: Dùng để kiểm tra kết nối lúc khởi động app
+        // ======================================================
+        public bool TestConnection(out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            string testConnectionString = connectionString + (connectionString.EndsWith(";") ? "" : ";") + "Connection Timeout=3;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(testConnectionString))
+                {
+                    connection.Open();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message; // Bắt lấy lỗi để mang ra ngoài thông báo
+                return false;
+            }
+        }
     }
 }
