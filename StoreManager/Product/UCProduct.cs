@@ -7,7 +7,7 @@ namespace StoreManager
     public partial class UCProduct : UserControl
     {
         private int currentSortIndex = 0;
-        private readonly string[] sortModes = { "A-Z", "Z-A", "PUP", "PDW", "NEW", "OLD" };
+        private readonly string[] sortModes = ["A-Z", "Z-A", "PUP", "PDW", "NEW", "OLD"];
         private int selectedProductID = -1;
         private bool isDataLoading = false;
 
@@ -50,17 +50,16 @@ namespace StoreManager
 
             if (isSearching) sql += " WHERE pro_name LIKE @keyword";
 
-            switch (currentSortIndex)
+            sql += currentSortIndex switch
             {
-                case 1: sql += " ORDER BY pro_name DESC"; break;
-                case 2: sql += " ORDER BY pro_price ASC"; break;
-                case 3: sql += " ORDER BY pro_price DESC"; break;
-                case 4: sql += " ORDER BY pro_ID DESC"; break;
-                case 5: sql += " ORDER BY pro_ID ASC"; break;
-                default: sql += " ORDER BY pro_name ASC"; break;
-            }
-
-            SqlParameter[] parameters = isSearching ? new[] { new SqlParameter("@keyword", "%" + keyword + "%") } : null;
+                1 => " ORDER BY pro_name DESC",
+                2 => " ORDER BY pro_price ASC",
+                3 => " ORDER BY pro_price DESC",
+                4 => " ORDER BY pro_ID DESC",
+                5 => " ORDER BY pro_ID ASC",
+                _ => " ORDER BY pro_name ASC",
+            };
+            SqlParameter[]? parameters = isSearching ? [new SqlParameter("@keyword", "%" + keyword + "%")] : null;
 
             DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
             lstProduct.DataSource = dt;
@@ -73,7 +72,7 @@ namespace StoreManager
         {
             isDataLoading = true;
             string sql = "SELECT * FROM Products WHERE pro_ID = @id";
-            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, [new SqlParameter("@id", id)]);
 
             if (dt.Rows.Count > 0)
             {
@@ -145,15 +144,15 @@ namespace StoreManager
                                VALUES (@name, @price, @count, @type, @sup, @desc); 
                                SELECT SCOPE_IDENTITY();";
 
-                SqlParameter[] parameters = new SqlParameter[]
-                {
+                SqlParameter[] parameters =
+                [
                     new SqlParameter("@name", txtName.Text.Trim()),
                     new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
                     new SqlParameter("@count", count),
                     new SqlParameter("@type", cbType.SelectedValue),
                     new SqlParameter("@sup", cbSupplier.SelectedValue),
                     new SqlParameter("@desc", txtDescription.Text.Trim())
-                };
+                ];
 
                 DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
@@ -173,8 +172,8 @@ namespace StoreManager
                                SET pro_name=@name, pro_price=@price, pro_count=@count, type_ID=@type, sup_ID=@sup, pro_description=@desc 
                                WHERE pro_ID=@id";
 
-                SqlParameter[] parameters = new SqlParameter[]
-                {
+                SqlParameter[] parameters =
+                [
                     new SqlParameter("@name", txtName.Text.Trim()),
                     new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
                     new SqlParameter("@count", count),
@@ -182,7 +181,7 @@ namespace StoreManager
                     new SqlParameter("@sup", cbSupplier.SelectedValue),
                     new SqlParameter("@desc", txtDescription.Text.Trim()),
                     new SqlParameter("@id", selectedProductID)
-                };
+                ];
 
                 if (DatabaseConnector.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
@@ -207,7 +206,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM Products WHERE pro_ID = @id";
-                    DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedProductID) });
+                    DatabaseConnector.Instance.ExecuteNonQuery(sql, [new SqlParameter("@id", selectedProductID)]);
                     MessageBox.Show("Đã xóa!");
                     LoadListData();
                     ClearForm();
@@ -249,12 +248,13 @@ namespace StoreManager
             txtPrice.KeyPress += NumberOnly_KeyPress;
             txtCount.KeyPress += NumberOnly_KeyPress;
 
-            EventHandler dataChanged = (s, e) => {
+            void dataChanged(object? s, EventArgs e)
+            {
                 if (!isDataLoading && Session.IsAdmin())
                 {
                     btnSave.Visible = true;
                 }
-            };
+            }
 
             txtName.TextChanged += dataChanged;
             txtPrice.TextChanged += dataChanged;
@@ -270,7 +270,7 @@ namespace StoreManager
             // Quản lý Phân Loại
             btnAddType.Click += (s, e) => {
                 if (!Session.IsAdmin()) return;
-                TypeEditorDialog dialog = new TypeEditorDialog(-1, "");
+                TypeEditorDialog dialog = new(-1, "");
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     LoadTypeData();
@@ -285,7 +285,7 @@ namespace StoreManager
                 int currentId = (int)cbType.SelectedValue;
                 string currentName = cbType.Text;
 
-                TypeEditorDialog dialog = new TypeEditorDialog(currentId, currentName);
+                TypeEditorDialog dialog = new(currentId, currentName);
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     LoadTypeData();
@@ -296,8 +296,7 @@ namespace StoreManager
             // Quản lý Thêm Nhà Cung Cấp
             btnAddSupplier.Click += (s, e) => {
                 if (!Session.IsAdmin()) return;
-                MainForm mainForm = this.FindForm() as MainForm;
-                if (mainForm != null)
+                if (FindForm() is MainForm mainForm)
                 {
                     mainForm.NavigateToSupplierAndCreate();
                 }
