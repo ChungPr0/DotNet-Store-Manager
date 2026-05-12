@@ -56,7 +56,7 @@ namespace StoreManager
             if (dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
-                selectedCusID = Convert.ToInt32(row["cus_ID"]);
+                selectedCusID = Convert.ToInt32(row["cus_ID"]); 
 
                 txtName.Text = row["cus_name"].ToString();
                 txtPhone.Text = row["cus_phone"].ToString();
