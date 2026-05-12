@@ -146,43 +146,68 @@ namespace StoreManager
             // Lấy Value ẩn của ComboBox đang chọn
             string roleVal = (string)((dynamic)cbRole.SelectedItem).Value;
 
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@name", txtName.Text.Trim()),
-                new SqlParameter("@dob", dtpDOB.Value.Date), // .Date để lấy ngày, bỏ qua giờ
-                new SqlParameter("@phone", txtPhone.Text.Trim()),
-                new SqlParameter("@address", txtAddress.Text.Trim()),
-                new SqlParameter("@salary", Convert.ToDecimal(txtSalary.Text.Trim())),
-                new SqlParameter("@startDate", dtpStartDate.Value.Date),
-                new SqlParameter("@user", user == "" ? (object)DBNull.Value : user),
-                new SqlParameter("@pass", pass == "" ? (object)DBNull.Value : pass),
-                new SqlParameter("@role", roleVal),
-                new SqlParameter("@id", selectedEmpID)
-            };
-
             if (selectedEmpID == -1) // Thêm Mới
             {
                 string sql = @"INSERT INTO Employees (emp_name, emp_date_of_birth, emp_phone, emp_address, emp_salary, emp_start_date, emp_username, emp_password, emp_role) 
-                               VALUES (@name, @dob, @phone, @address, @salary, @startDate, @user, @pass, @role)";
+                       VALUES (@name, @dob, @phone, @address, @salary, @startDate, @user, @pass, @role); 
+                       SELECT SCOPE_IDENTITY();";
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                SqlParameter[] parameters = new SqlParameter[]
                 {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@dob", dtpDOB.Value.Date),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim()),
+                    new SqlParameter("@salary", Convert.ToDecimal(txtSalary.Text.Trim())),
+                    new SqlParameter("@startDate", dtpStartDate.Value.Date),
+                    new SqlParameter("@user", user == "" ? (object)DBNull.Value : user),
+                    new SqlParameter("@pass", pass == "" ? (object)DBNull.Value : pass),
+                    new SqlParameter("@role", roleVal)
+                };
+
+                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+
+                if (dt.Rows.Count > 0)
+                {
+                    int newID = Convert.ToInt32(dt.Rows[0][0]); // Bắt ID mới
                     MessageBox.Show("Thêm nhân viên thành công!");
                     LoadListData();
-                    ClearForm();
+                    lstEmployee.SelectedValue = newID; // Trỏ thẳng vào nhân viên vừa tạo
                 }
             }
             else // Cập Nhật
             {
                 string sql = @"UPDATE Employees 
-                               SET emp_name=@name, emp_date_of_birth=@dob, emp_phone=@phone, emp_address=@address, 
-                                   emp_salary=@salary, emp_start_date=@startDate, emp_username=@user, emp_password=@pass, emp_role=@role 
-                               WHERE emp_ID=@id";
+                       SET emp_name=@name, emp_date_of_birth=@dob, emp_phone=@phone, emp_address=@address, 
+                           emp_salary=@salary, emp_start_date=@startDate, emp_username=@user, emp_password=@pass, emp_role=@role 
+                       WHERE emp_ID=@id";
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@dob", dtpDOB.Value.Date),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim()),
+                    new SqlParameter("@salary", Convert.ToDecimal(txtSalary.Text.Trim())),
+                    new SqlParameter("@startDate", dtpStartDate.Value.Date),
+                    new SqlParameter("@user", user == "" ? (object)DBNull.Value : user),
+                    new SqlParameter("@pass", pass == "" ? (object)DBNull.Value : pass),
+                    new SqlParameter("@role", roleVal),
+                    new SqlParameter("@id", selectedEmpID)
+                };
 
                 if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
+                    // 1. Cất giấu ID vào biến tạm
+                    int tempID = selectedEmpID;
+
                     MessageBox.Show("Cập nhật thành công!");
+
+                    // 2. Nạp lại list
                     LoadListData();
+
+                    // 3. Phục hồi lại focus bằng biến đã giấu
+                    lstEmployee.SelectedValue = tempID;
                 }
             }
         }

@@ -3,13 +3,8 @@ using StoreManager.Utils;
 
 namespace StoreManager
 {
-    public class AddInvoiceDetailDialog : Form
+    public partial class AddInvoiceDetailDialog : Form
     {
-        private ComboBox cbProduct;
-        private TextBox txtStock;
-        private TextBox txtQuantity;
-        private Button btnSearchProduct, btnAdd, btnCancel;
-
         public int SelectedProductID { get; private set; } = -1;
         public string SelectedProductName { get; private set; } = "";
         public int SelectedQty { get; private set; } = 0;
@@ -18,61 +13,10 @@ namespace StoreManager
 
         public AddInvoiceDetailDialog()
         {
-            // Thiết lập UI
-            this.Text = "Thêm Sản Phẩm";
-            this.Size = new Size(450, 420);
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.BackColor = Color.White;
+            InitializeComponent();
 
-            Label lblTitle = new Label { Text = "CHỌN SẢN PHẨM", Font = new Font("Segoe UI", 14, FontStyle.Bold), ForeColor = Color.FromArgb(44, 62, 80), AutoSize = true, Location = new Point(20, 20) };
-
-            Label lbl1 = new Label { Text = "Sản Phẩm:", Font = new Font("Segoe UI", 9, FontStyle.Bold), ForeColor = Color.FromArgb(100, 116, 139), AutoSize = true, Location = new Point(20, 70) };
-            cbProduct = new ComboBox { Location = new Point(20, 95), Size = new Size(330, 30), Font = new Font("Segoe UI", 10), DropDownStyle = ComboBoxStyle.DropDownList };
-            btnSearchProduct = new Button { Text = "Tìm", Location = new Point(360, 94), Size = new Size(50, 32), BackColor = Color.WhiteSmoke, FlatStyle = FlatStyle.Flat, Cursor = Cursors.Hand };
-            btnSearchProduct.FlatAppearance.BorderSize = 1;
-
-            Label lbl2 = new Label { Text = "Tồn Kho Hiện Tại:", Font = new Font("Segoe UI", 9, FontStyle.Bold), ForeColor = Color.FromArgb(100, 116, 139), AutoSize = true, Location = new Point(20, 140) };
-            txtStock = new TextBox { Location = new Point(20, 165), Size = new Size(390, 30), Font = new Font("Segoe UI", 10), ReadOnly = true, BackColor = Color.WhiteSmoke };
-
-            Label lbl3 = new Label { Text = "Số Lượng Mua:", Font = new Font("Segoe UI", 9, FontStyle.Bold), ForeColor = Color.FromArgb(100, 116, 139), AutoSize = true, Location = new Point(20, 210) };
-            txtQuantity = new TextBox { Text = "1", Location = new Point(20, 235), Size = new Size(390, 30), Font = new Font("Segoe UI", 10) };
-
-            btnAdd = new Button { Text = "Xác Nhận", Location = new Point(90, 310), Size = new Size(120, 40), BackColor = Color.FromArgb(46, 204, 113), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            btnAdd.FlatAppearance.BorderSize = 0;
-            btnCancel = new Button { Text = "Hủy Bỏ", Location = new Point(230, 310), Size = new Size(120, 40), BackColor = Color.FromArgb(231, 76, 60), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-            btnCancel.FlatAppearance.BorderSize = 0;
-
-            this.Controls.AddRange(new Control[] { lblTitle, lbl1, cbProduct, btnSearchProduct, lbl2, txtStock, lbl3, txtQuantity, btnAdd, btnCancel });
-            this.AcceptButton = btnAdd;
-
-            // Load Data & Events
+            // Load dữ liệu và chọn item đầu tiên sau khi UI được vẽ
             LoadProductData();
-
-            cbProduct.SelectedIndexChanged += (s, e) => {
-                if (cbProduct.SelectedValue != null && productStockMap.ContainsKey((int)cbProduct.SelectedValue))
-                {
-                    txtStock.Text = productStockMap[(int)cbProduct.SelectedValue].ToString();
-                }
-            };
-
-            btnSearchProduct.Click += (s, e) => {
-                SearchProductDialog searchDlg = new SearchProductDialog();
-                if (searchDlg.ShowDialog() == DialogResult.OK)
-                {
-                    cbProduct.SelectedValue = searchDlg.SelectedProductID;
-                }
-            };
-
-            txtQuantity.KeyPress += (s, e) => {
-                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) e.Handled = true;
-            };
-
-            btnAdd.Click += BtnAdd_Click;
-            btnCancel.Click += (s, e) => this.Close();
-
             if (cbProduct.Items.Count > 0) cbProduct.SelectedIndex = 0;
         }
 
@@ -91,7 +35,32 @@ namespace StoreManager
             cbProduct.ValueMember = "pro_ID";
         }
 
-        private void BtnAdd_Click(object sender, EventArgs e)
+        private void cbProduct_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbProduct.SelectedValue != null && productStockMap.ContainsKey((int)cbProduct.SelectedValue))
+            {
+                txtStock.Text = productStockMap[(int)cbProduct.SelectedValue].ToString();
+            }
+        }
+
+        private void btnSearchProduct_Click(object sender, EventArgs e)
+        {
+            SearchProductDialog searchDlg = new SearchProductDialog();
+            if (searchDlg.ShowDialog() == DialogResult.OK)
+            {
+                cbProduct.SelectedValue = searchDlg.SelectedProductID;
+            }
+        }
+
+        private void txtQuantity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtQuantity.Text))
             {
@@ -122,6 +91,11 @@ namespace StoreManager
             SelectedQty = qty;
 
             this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
     }

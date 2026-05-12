@@ -1,3 +1,5 @@
+using StoreManager.Utils;
+
 namespace StoreManager
 {
     internal static class Program
@@ -7,17 +9,22 @@ namespace StoreManager
         {
             ApplicationConfiguration.Initialize();
 
-            // Bật form đăng nhập lên trước
-            LoginForm loginForm = new LoginForm();
-            if (loginForm.ShowDialog() == DialogResult.OK)
+            while (true)
             {
-                // Nếu đăng nhập thành công thì mới mở MainForm
+                using (LoginForm loginForm = new LoginForm())
+                {
+                    if (loginForm.ShowDialog() != DialogResult.OK)
+                    {
+                        break;
+                    }
+                }
+
                 Application.Run(new MainForm());
-            }
-            else
-            {
-                // Nếu tắt form đăng nhập thì thoát ứng dụng luôn
-                Application.Exit();
+
+                if (Session.IsLoggedIn)
+                {
+                    break;
+                }
             }
         }
     }

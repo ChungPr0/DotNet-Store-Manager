@@ -91,7 +91,6 @@ namespace StoreManager
                 EnableForm(true);
                 btnAdd.Visible = true;
                 btnDelete.Visible = true;
-                btnSave.Text = "LƯU";
                 btnSave.Visible = false;
             }
             isDataLoading = false;
@@ -116,7 +115,6 @@ namespace StoreManager
 
             btnAdd.Visible = false;
             btnDelete.Visible = false;
-            btnSave.Text = "LƯU MỚI";
             btnSave.Visible = true;
         }
 
@@ -136,39 +134,59 @@ namespace StoreManager
 
             int count = string.IsNullOrWhiteSpace(txtCount.Text) ? 0 : int.Parse(txtCount.Text);
 
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@name", txtName.Text.Trim()),
-                new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
-                new SqlParameter("@count", count),
-                new SqlParameter("@type", cbType.SelectedValue),
-                new SqlParameter("@sup", cbSupplier.SelectedValue),
-                new SqlParameter("@desc", txtDescription.Text.Trim()),
-                new SqlParameter("@id", selectedProductID)
-            };
-
-            if (selectedProductID == -1) // Insert
+            if (selectedProductID == -1) // Thêm mới
             {
                 string sql = @"INSERT INTO Products (pro_name, pro_price, pro_count, type_ID, sup_ID, pro_description) 
-                               VALUES (@name, @price, @count, @type, @sup, @desc)";
+                       VALUES (@name, @price, @count, @type, @sup, @desc); 
+                       SELECT SCOPE_IDENTITY();";
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                SqlParameter[] parameters = new SqlParameter[]
+                 {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
+                    new SqlParameter("@count", count),
+                    new SqlParameter("@type", cbType.SelectedValue),
+                    new SqlParameter("@sup", cbSupplier.SelectedValue),
+                    new SqlParameter("@desc", txtDescription.Text.Trim())
+                };
+
+                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+
+                if (dt.Rows.Count > 0)
                 {
+                    int newID = Convert.ToInt32(dt.Rows[0][0]);
+
                     MessageBox.Show("Thêm sản phẩm thành công!");
                     LoadListData();
-                    ClearForm();
+                    lstProduct.SelectedValue = newID;
+                    btnSave.Visible = false; // Ẩn nút lưu
                 }
             }
-            else // Update
+            else // Cập nhật
             {
                 string sql = @"UPDATE Products 
-                               SET pro_name=@name, pro_price=@price, pro_count=@count, type_ID=@type, sup_ID=@sup, pro_description=@desc 
-                               WHERE pro_ID=@id";
+                       SET pro_name=@name, pro_price=@price, pro_count=@count, type_ID=@type, sup_ID=@sup, pro_description=@desc 
+                       WHERE pro_ID=@id";
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
+                    new SqlParameter("@count", count),
+                    new SqlParameter("@type", cbType.SelectedValue),
+                    new SqlParameter("@sup", cbSupplier.SelectedValue),
+                    new SqlParameter("@desc", txtDescription.Text.Trim()),
+                    new SqlParameter("@id", selectedProductID)
+                };
 
                 if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
+                    int tempID = selectedProductID;
+
                     MessageBox.Show("Cập nhật thành công!");
                     LoadListData();
+                    lstProduct.SelectedValue = tempID;
+                    btnSave.Visible = false; // Ẩn nút lưu
                 }
             }
         }
@@ -195,6 +213,10 @@ namespace StoreManager
                         MessageBox.Show("Lỗi: " + ex.Message);
                 }
             }
+        }
+        public void SelectProduct(int proID)
+        {
+            lstProduct.SelectedValue = proID;
         }
 
         private void SetupEvents()
@@ -262,9 +284,7 @@ namespace StoreManager
                 MainForm mainForm = this.FindForm() as MainForm;
                 if (mainForm != null)
                 {
-                    UCSupplier ucSupplier = new UCSupplier();
-                    ucSupplier.PrepareCreate();
-                    mainForm.AddUserControl(ucSupplier);
+                    mainForm.NavigateToSupplierAndCreate();
                 }
             };
         }

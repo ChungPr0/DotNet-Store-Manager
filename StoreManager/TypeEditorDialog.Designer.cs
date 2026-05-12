@@ -1,4 +1,6 @@
-﻿namespace StoreManager
+﻿using StoreManager.Utils;
+
+namespace StoreManager
 {
     partial class TypeEditorDialog
     {
@@ -20,9 +22,9 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.btnAction = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnAction = new Custom3DButton();
+            this.btnDelete = new Custom3DButton();
+            this.btnCancel = new Custom3DButton();
             this.SuspendLayout();
 
             this.lblTitle.AutoSize = true;

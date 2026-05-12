@@ -97,33 +97,47 @@ namespace StoreManager
                 return;
             }
 
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@name", txtName.Text.Trim()),
-                new SqlParameter("@phone", txtPhone.Text.Trim()),
-                new SqlParameter("@address", txtAddress.Text.Trim()),
-                new SqlParameter("@id", selectedCusID)
-            };
-
             if (selectedCusID == -1) // Thêm mới
             {
-                string sql = "INSERT INTO Customers (cus_name, cus_phone, cus_address) VALUES (@name, @phone, @address)";
+                // Dùng ExecuteQuery và SCOPE_IDENTITY() để lấy ID vừa sinh ra từ DB
+                string sql = "INSERT INTO Customers (cus_name, cus_phone, cus_address) VALUES (@name, @phone, @address); SELECT SCOPE_IDENTITY();";
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                SqlParameter[] parameters = new SqlParameter[]
                 {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim())
+                };
+
+                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+
+                if (dt.Rows.Count > 0)
+                {
+                    int newID = Convert.ToInt32(dt.Rows[0][0]); // Bắt lấy cái ID mới
+
                     MessageBox.Show("Thêm khách hàng thành công!");
                     LoadListData();
-                    ClearForm();
+                    lstCustomer.SelectedValue = newID;
                 }
             }
             else // Cập nhật
             {
                 string sql = "UPDATE Customers SET cus_name=@name, cus_phone=@phone, cus_address=@address WHERE cus_ID=@id";
 
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim()),
+                    new SqlParameter("@id", selectedCusID)
+                };
+
                 if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
+                    int tempId = selectedCusID; // Lưu tạm ID trước khi reload
                     MessageBox.Show("Cập nhật thành công!");
                     LoadListData();
+                    lstCustomer.SelectedValue = tempId;
                 }
             }
         }

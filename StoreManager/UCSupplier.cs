@@ -139,38 +139,57 @@ namespace StoreManager
                 return;
             }
 
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@name", txtName.Text.Trim()),
-                new SqlParameter("@phone", txtPhone.Text.Trim()),
-                new SqlParameter("@address", txtAddress.Text.Trim()),
-                new SqlParameter("@date", dtpStartDate.Value.Date),
-                new SqlParameter("@desc", txtDescription.Text.Trim()),
-                new SqlParameter("@id", selectedSupID)
-            };
-
-            if (selectedSupID == -1) // INSERT
+            if (selectedSupID == -1) // Thêm mới
             {
                 string sql = @"INSERT INTO Suppliers (sup_name, sup_phone, sup_address, sup_start_date, sup_description) 
-                               VALUES (@name, @phone, @address, @date, @desc)";
+                       VALUES (@name, @phone, @address, @date, @desc); 
+                       SELECT SCOPE_IDENTITY();";
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                SqlParameter[] parameters = new SqlParameter[]
                 {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim()),
+                    new SqlParameter("@date", dtpStartDate.Value.Date),
+                    new SqlParameter("@desc", txtDescription.Text.Trim())
+                };
+
+                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+
+                if (dt.Rows.Count > 0)
+                {
+                    int newID = Convert.ToInt32(dt.Rows[0][0]); // Bắt ID mới
+
                     MessageBox.Show("Thêm nhà cung cấp thành công!");
                     LoadListData();
-                    ClearForm();
+                    lstSupplier.SelectedValue = newID;
+                    btnSave.Visible = false; // Ẩn nút lưu
                 }
             }
-            else // UPDATE
+            else // Cập nhật
             {
                 string sql = @"UPDATE Suppliers 
-                               SET sup_name=@name, sup_phone=@phone, sup_address=@address, sup_start_date=@date, sup_description=@desc 
-                               WHERE sup_ID=@id";
+                       SET sup_name=@name, sup_phone=@phone, sup_address=@address, sup_start_date=@date, sup_description=@desc 
+                       WHERE sup_ID=@id";
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@name", txtName.Text.Trim()),
+                    new SqlParameter("@phone", txtPhone.Text.Trim()),
+                    new SqlParameter("@address", txtAddress.Text.Trim()),
+                    new SqlParameter("@date", dtpStartDate.Value.Date),
+                    new SqlParameter("@desc", txtDescription.Text.Trim()),
+                    new SqlParameter("@id", selectedSupID)
+                };
 
                 if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
+                    int tempID = selectedSupID;
+
                     MessageBox.Show("Cập nhật thành công!");
                     LoadListData();
+                    lstSupplier.SelectedValue = tempID;
+                    btnSave.Visible = false; // Ẩn nút lưu
                 }
             }
         }
@@ -219,6 +238,21 @@ namespace StoreManager
 
             txtPhone.KeyPress += (s, e) => {
                 if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) e.Handled = true;
+            };
+
+            dgvProducts.CellDoubleClick += (s, e) =>
+            {
+                if (e.RowIndex >= 0)
+                {
+                    DataRowView rowView = (DataRowView)dgvProducts.Rows[e.RowIndex].DataBoundItem;
+                    int proID = Convert.ToInt32(rowView["pro_ID"]);
+
+                    MainForm mainForm = this.FindForm() as MainForm;
+                    if (mainForm != null)
+                    {
+                        mainForm.NavigateToProductAndSelect(proID);
+                    }
+                }
             };
 
             EventHandler dataChanged = (s, e) => {

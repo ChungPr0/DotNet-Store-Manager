@@ -171,7 +171,7 @@ namespace StoreManager
 
             try
             {
-                if (selectedInvID == -1)
+                if (selectedInvID == -1) // Thêm Mới
                 {
                     string sqlInv = "INSERT INTO Invoices (cus_ID, emp_ID, inv_price) VALUES (@cus, @emp, @price); SELECT SCOPE_IDENTITY();";
                     double total = Convert.ToDouble(lblFinalTotal.Text.Replace(" VND", "").Replace(",", ""));
@@ -198,10 +198,12 @@ namespace StoreManager
                     }
 
                     MessageBox.Show("Tạo hóa đơn thành công!");
+
                     LoadListData();
-                    ClearForm();
+                    lstInvoice.SelectedValue = newInvID;
+                    btnSave.Visible = false;
                 }
-                else
+                else // Cập Nhật
                 {
                     DataTable dtOld = DatabaseHelper.Instance.ExecuteQuery("SELECT pro_ID, ind_count FROM Invoice_details WHERE inv_ID = @id", new[] { new SqlParameter("@id", selectedInvID) });
                     foreach (DataRow row in dtOld.Rows)
@@ -235,8 +237,12 @@ namespace StoreManager
                         new SqlParameter("@id", selectedInvID)
                     });
 
+                    int tempID = selectedInvID;
+
                     MessageBox.Show("Cập nhật hóa đơn thành công!");
                     LoadListData();
+                    lstInvoice.SelectedValue = tempID;
+                    btnSave.Visible = false;
                 }
             }
             catch (Exception ex)

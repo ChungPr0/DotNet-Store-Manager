@@ -1,4 +1,6 @@
-﻿namespace StoreManager
+﻿using StoreManager.Utils;
+
+namespace StoreManager
 {
     partial class LoginForm
     {
@@ -22,8 +24,8 @@
             txtUsername = new TextBox();
             lblPass = new Label();
             txtPassword = new TextBox();
-            btnLogin = new Button();
-            btnExit = new Button();
+            btnLogin = new Custom3DButton();
+            btnExit = new Custom3DButton();
             SuspendLayout();
             // 
             // lblTitle

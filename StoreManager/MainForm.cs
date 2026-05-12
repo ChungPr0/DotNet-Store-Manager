@@ -4,9 +4,11 @@ namespace StoreManager
     {
         // Biến lưu trữ nút đang được click (Active)
         private Button currentBtn;
-
-        // Biến lưu trữ UserControl đang được hiển thị trên panelBody
-        private UserControl currentControl;
+        private UCEmployee ucEmployee;
+        private UCSupplier ucSupplier;
+        private UCCustomer ucCustomer;
+        private UCProduct ucProduct;
+        private UCInvoice ucInvoice;
 
         public MainForm()
         {
@@ -15,22 +17,17 @@ namespace StoreManager
             btnHome.PerformClick();
         }
 
-        // --- HÀM XỬ LÝ CHUYỂN MÀN HÌNH (USER CONTROL) ---
+        // --- HÀM XỬ LÝ CHUYỂN MÀN HÌNH (TỐI ƯU LAZY LOADING) ---
         public void AddUserControl(UserControl userControl)
         {
-            // 1. Dọn dẹp màn hình cũ nếu có để giải phóng bộ nhớ
-            if (currentControl != null)
-            {
-                panelBody.Controls.Remove(currentControl);
-                currentControl.Dispose();
-            }
-
-            // 2. Gán màn hình mới và ép nó giãn đầy panel
-            currentControl = userControl;
             userControl.Dock = DockStyle.Fill;
 
-            // 3. Đẩy lên panelBody 
-            panelBody.Controls.Add(userControl);
+            if (!panelBody.Controls.Contains(userControl))
+            {
+                panelBody.Controls.Add(userControl);
+            }
+
+            // Đẩy Tab này lên trên cùng để che các Tab khác lại (Giữ nguyên State của các tab dưới)
             userControl.BringToFront();
         }
 
@@ -72,43 +69,109 @@ namespace StoreManager
             ActivateButton(sender);
 
             // Gọi màn hình Trang Chủ (UCDashboard)
-            //AddUserControl(new UCDashboard());
+            // if (ucDashboard == null) ucDashboard = new UCDashboard();
+            // AddUserControl(ucDashboard);
         }
 
         private void btnEmployee_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            AddUserControl(new UCEmployee());
+
+            if (ucEmployee == null)
+            {
+                ucEmployee = new UCEmployee();
+            }
+            AddUserControl(ucEmployee);
         }
 
         private void btnSupplier_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            AddUserControl(new UCSupplier());
+
+            if (ucSupplier == null)
+            {
+                ucSupplier = new UCSupplier();
+            }
+            AddUserControl(ucSupplier);
         }
 
         private void btnCustomer_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            AddUserControl(new UCCustomer());
+
+            if (ucCustomer == null)
+            {
+                ucCustomer = new UCCustomer();
+            }
+            AddUserControl(ucCustomer);
         }
 
         private void btnProduct_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            AddUserControl(new UCProduct());
+
+            if (ucProduct == null)
+            {
+                ucProduct = new UCProduct();
+            }
+            AddUserControl(ucProduct);
         }
 
         private void btnInvoice_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            AddUserControl(new UCInvoice());
+
+            if (ucInvoice == null)
+            {
+                ucInvoice = new UCInvoice();
+            }
+            AddUserControl(ucInvoice);
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
-            // AddUserControl(new UCAccount()); // Bỏ comment (//) sau khi tạo xong UCAccount
+            Color originalBackColor = btnAccount.BackColor;
+            Color originalForeColor = btnAccount.ForeColor;
+
+            btnAccount.BackColor = Color.FromArgb(52, 152, 219);
+            btnAccount.ForeColor = Color.White;
+
+            AccountPopupForm popup = new AccountPopupForm();
+
+            Point pt = this.PointToScreen(btnAccount.Location);
+            int xPos = pt.X - popup.Width + btnAccount.Width;
+            int yPos = pt.Y + btnAccount.Height + 5;
+
+            popup.Location = new Point(xPos, yPos);
+
+            popup.FormClosed += (s, args) =>
+            {
+                btnAccount.BackColor = originalBackColor;
+                btnAccount.ForeColor = originalForeColor;
+            };
+
+            // Show(this) để popup hiểu MainForm là form cha
+            popup.Show(this);
+        }
+
+        public void NavigateToSupplierAndCreate()
+        {
+             btnSupplier.PerformClick();
+
+            if (ucSupplier != null)
+            {
+                ucSupplier.PrepareCreate();
+            }
+        }
+
+        public void NavigateToProductAndSelect(int proID)
+        {
+            btnProduct.PerformClick();
+
+            if (ucProduct != null)
+            {
+                ucProduct.SelectProduct(proID);
+            }
         }
     }
 }
