@@ -249,8 +249,7 @@ namespace StoreManager
             txtPrice.KeyPress += NumberOnly_KeyPress;
             txtCount.KeyPress += NumberOnly_KeyPress;
 
-            EventHandler dataChanged = (s, e) =>
-            {
+            EventHandler dataChanged = (s, e) => {
                 if (!isDataLoading && Session.IsAdmin())
                 {
                     btnSave.Visible = true;
@@ -269,8 +268,7 @@ namespace StoreManager
             btnDelete.Click += (s, e) => DeleteProduct();
 
             // Quản lý Phân Loại
-            btnAddType.Click += (s, e) =>
-            {
+            btnAddType.Click += (s, e) => {
                 if (!Session.IsAdmin()) return;
                 TypeEditorDialog dialog = new TypeEditorDialog(-1, "");
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -281,8 +279,7 @@ namespace StoreManager
             };
 
             // Quản lý Phân Loại SỬA
-            btnEditType.Click += (s, e) =>
-            {
+            btnEditType.Click += (s, e) => {
                 if (!Session.IsAdmin()) return;
                 if (cbType.SelectedValue == null) return;
                 int currentId = (int)cbType.SelectedValue;
@@ -297,8 +294,7 @@ namespace StoreManager
             };
 
             // Quản lý Thêm Nhà Cung Cấp
-            btnAddSupplier.Click += (s, e) =>
-            {
+            btnAddSupplier.Click += (s, e) => {
                 if (!Session.IsAdmin()) return;
                 MainForm mainForm = this.FindForm() as MainForm;
                 if (mainForm != null)
