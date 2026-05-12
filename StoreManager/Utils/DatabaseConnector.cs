@@ -4,20 +4,20 @@ using Microsoft.Data.SqlClient;
 
 namespace StoreManager.Utils
 {
-    public class DatabaseHelper
+    public class DatabaseConnector
     {
         string connectionString = "Server=.\\SQLEXPRESS;Database=StoreManager;Integrated Security=True;TrustServerCertificate=True;";
 
         // Sử dụng pattern Singleton để dễ gọi hàm từ bất kỳ đâu mà không cần new nhiều lần
-        private static DatabaseHelper instance;
-        public static DatabaseHelper Instance
+        private static DatabaseConnector instance;
+        public static DatabaseConnector Instance
         {
-            get { if (instance == null) instance = new DatabaseHelper(); return instance; }
+            get { if (instance == null) instance = new DatabaseConnector(); return instance; }
             private set { instance = value; }
         }
 
         // Constructor private để cấm tạo object bừa bãi
-        private DatabaseHelper() { }
+        private DatabaseConnector() { }
 
         // ======================================================
         // HÀM 1: Dùng cho câu lệnh SELECT (Trả về 1 bảng dữ liệu)

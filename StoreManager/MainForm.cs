@@ -1,9 +1,12 @@
+using StoreManager.Utils;
+
 namespace StoreManager
 {
     public partial class MainForm : Form
     {
         // Biến lưu trữ nút đang được click (Active)
         private Button currentBtn;
+        private UCDashboard ucDashboard;
         private UCEmployee ucEmployee;
         private UCSupplier ucSupplier;
         private UCCustomer ucCustomer;
@@ -13,8 +16,6 @@ namespace StoreManager
         public MainForm()
         {
             InitializeComponent();
-
-            btnHome.PerformClick();
         }
 
         // --- HÀM XỬ LÝ CHUYỂN MÀN HÌNH (TỐI ƯU LAZY LOADING) ---
@@ -36,12 +37,10 @@ namespace StoreManager
         {
             if (btnSender != null)
             {
-                // Nếu nút vừa click KHÁC với nút đang sáng màu
                 if (currentBtn != (Button)btnSender)
                 {
-                    ResetButtonColors(); // Reset màu tất cả các nút về mặc định trước
+                    ResetButtonColors(); 
 
-                    // Gán nút hiện tại thành nút vừa click và đổi màu sáng
                     currentBtn = (Button)btnSender;
                     currentBtn.BackColor = Color.FromArgb(52, 152, 219); // Màu xanh dương (Active)
                 }
@@ -51,12 +50,10 @@ namespace StoreManager
         // --- HÀM TRẢ CÁC NÚT VỀ MÀU NỀN MẶC ĐỊNH ---
         private void ResetButtonColors()
         {
-            // Duyệt qua tất cả các control nằm trong panelHeader
             foreach (Control previousBtn in panelHeader.Controls)
             {
                 if (previousBtn.GetType() == typeof(Button))
                 {
-                    // Trả về màu xám đen mặc định của thanh Header
                     previousBtn.BackColor = Color.FromArgb(44, 62, 80);
                 }
             }
@@ -67,10 +64,12 @@ namespace StoreManager
         private void btnHome_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-
-            // Gọi màn hình Trang Chủ (UCDashboard)
-            // if (ucDashboard == null) ucDashboard = new UCDashboard();
-            // AddUserControl(ucDashboard);
+            if (ucDashboard == null)
+            {
+                ucDashboard = new UCDashboard();
+            }
+            AddUserControl(ucDashboard);
+            ucDashboard.RefreshDashboard();
         }
 
         private void btnEmployee_Click(object sender, EventArgs e)
@@ -152,6 +151,24 @@ namespace StoreManager
 
             // Show(this) để popup hiểu MainForm là form cha
             popup.Show(this);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!Session.IsAdmin())
+            {
+                btnHome.Visible = false;
+                btnSupplier.Visible = false;
+                btnEmployee.Visible = false;
+
+                btnInvoice.PerformClick();
+            }
+            else 
+            {
+                btnHome.PerformClick();
+            }
         }
 
         public void NavigateToSupplierAndCreate()

@@ -51,7 +51,7 @@ namespace StoreManager
 
             SqlParameter[] parameters = isSearching ? new[] { new SqlParameter("@keyword", "%" + keyword + "%") } : null;
 
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
             lstSupplier.DataSource = dt;
             lstSupplier.DisplayMember = "sup_name";
@@ -64,7 +64,7 @@ namespace StoreManager
         {
             isDataLoading = true;
             string sql = "SELECT * FROM Suppliers WHERE sup_ID = @id";
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
 
             if (dt.Rows.Count > 0)
             {
@@ -104,7 +104,7 @@ namespace StoreManager
                 WHERE p.sup_ID = @id
                 GROUP BY p.pro_ID, p.pro_name, p.pro_price, p.pro_count";
 
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", supID) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", supID) });
             dgvProducts.DataSource = dt;
         }
 
@@ -154,7 +154,7 @@ namespace StoreManager
                     new SqlParameter("@desc", txtDescription.Text.Trim())
                 };
 
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -182,7 +182,7 @@ namespace StoreManager
                     new SqlParameter("@id", selectedSupID)
                 };
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                if (DatabaseConnector.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
                     int tempID = selectedSupID;
 
@@ -203,7 +203,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM Suppliers WHERE sup_ID = @id";
-                    DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedSupID) });
+                    DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedSupID) });
                     MessageBox.Show("Đã xóa!");
                     LoadListData();
                     ClearForm();

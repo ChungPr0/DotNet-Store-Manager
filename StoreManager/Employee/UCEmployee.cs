@@ -54,7 +54,7 @@ namespace StoreManager
 
             SqlParameter[] parameters = isSearching ? new[] { new SqlParameter("@keyword", "%" + keyword + "%") } : null;
 
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
             lstEmployee.DataSource = dt;
             lstEmployee.DisplayMember = "emp_name"; // Cột hiển thị ra màn hình
@@ -67,7 +67,7 @@ namespace StoreManager
         {
             isDataLoading = true;
             string sql = "SELECT * FROM Employees WHERE emp_ID = @id";
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
 
             if (dt.Rows.Count > 0)
             {
@@ -165,7 +165,7 @@ namespace StoreManager
                     new SqlParameter("@role", roleVal)
                 };
 
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -196,7 +196,7 @@ namespace StoreManager
                     new SqlParameter("@id", selectedEmpID)
                 };
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                if (DatabaseConnector.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
                     // 1. Cất giấu ID vào biến tạm
                     int tempID = selectedEmpID;
@@ -221,7 +221,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM Employees WHERE emp_ID = @id";
-                    DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedEmpID) });
+                    DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedEmpID) });
                     MessageBox.Show("Đã xóa!");
                     LoadListData();
                     ClearForm();

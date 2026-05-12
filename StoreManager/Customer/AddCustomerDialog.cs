@@ -33,7 +33,7 @@ namespace StoreManager
             try
             {
                 string sql = "INSERT INTO Customers (cus_name, cus_phone, cus_address) VALUES (@name, @phone, @address); SELECT SCOPE_IDENTITY();";
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] {
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] {
                     new SqlParameter("@name", txtName.Text.Trim()),
                     new SqlParameter("@phone", txtPhone.Text.Trim()),
                     new SqlParameter("@address", txtAddress.Text.Trim())
