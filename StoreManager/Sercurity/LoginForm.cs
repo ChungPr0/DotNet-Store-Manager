@@ -22,7 +22,7 @@ namespace StoreManager
             {
                 string sql = "SELECT emp_ID, emp_name, emp_role FROM Employees WHERE emp_username = @u AND emp_password = @p";
                 SqlParameter[] parameters = { new SqlParameter("@u", user), new SqlParameter("@p", pass) };
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
                 if (dt.Rows.Count > 0)
                 {

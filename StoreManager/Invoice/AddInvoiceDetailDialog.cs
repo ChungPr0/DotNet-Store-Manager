@@ -22,7 +22,7 @@ namespace StoreManager
 
         private void LoadProductData()
         {
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery("SELECT pro_ID, pro_name, pro_count FROM Products WHERE pro_count > 0 ORDER BY pro_name ASC");
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery("SELECT pro_ID, pro_name, pro_count FROM Products WHERE pro_count > 0 ORDER BY pro_name ASC");
 
             productStockMap.Clear();
             foreach (DataRow row in dt.Rows)

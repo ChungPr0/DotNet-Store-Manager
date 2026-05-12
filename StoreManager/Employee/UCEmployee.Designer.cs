@@ -271,6 +271,7 @@ namespace StoreManager
             // cbRole
             // 
             cbRole.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cbRole.DropDownStyle = ComboBoxStyle.DropDownList;
             cbRole.Font = new Font("Segoe UI", 10F);
             cbRole.FormattingEnabled = true;
             cbRole.Location = new Point(445, 98);
@@ -494,9 +495,6 @@ namespace StoreManager
         private ListBox lstEmployee;
         private Label label2;
         private Panel panel5;
-        private Button btnSave;
-        private Button btnDelete;
-        private Button btnAdd;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label3;
         private TextBox txtName;
@@ -516,5 +514,8 @@ namespace StoreManager
         private ComboBox cbRole;
         private TextBox txtSalary;
         private Label label5;
+        private Custom3DButton btnSave;
+        private Custom3DButton btnDelete;
+        private Custom3DButton btnAdd;
     }
 }

@@ -1,6 +1,6 @@
-﻿using StoreManager.Utils;
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.SqlClient;
+using StoreManager.Utils;
 
 namespace StoreManager
 {
@@ -24,7 +24,7 @@ namespace StoreManager
         private void LoadTypeData()
         {
             isDataLoading = true;
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery("SELECT type_ID, type_name FROM ProductTypes ORDER BY type_name ASC");
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery("SELECT type_ID, type_name FROM ProductTypes ORDER BY type_name ASC");
             cbType.DataSource = dt;
             cbType.DisplayMember = "type_name";
             cbType.ValueMember = "type_ID";
@@ -34,7 +34,7 @@ namespace StoreManager
         private void LoadSupplierData()
         {
             isDataLoading = true;
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery("SELECT sup_ID, sup_name FROM Suppliers ORDER BY sup_name ASC");
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery("SELECT sup_ID, sup_name FROM Suppliers ORDER BY sup_name ASC");
             cbSupplier.DataSource = dt;
             cbSupplier.DisplayMember = "sup_name";
             cbSupplier.ValueMember = "sup_ID";
@@ -62,7 +62,7 @@ namespace StoreManager
 
             SqlParameter[] parameters = isSearching ? new[] { new SqlParameter("@keyword", "%" + keyword + "%") } : null;
 
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
             lstProduct.DataSource = dt;
             lstProduct.DisplayMember = "pro_name";
             lstProduct.ValueMember = "pro_ID";
@@ -73,7 +73,7 @@ namespace StoreManager
         {
             isDataLoading = true;
             string sql = "SELECT * FROM Products WHERE pro_ID = @id";
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
 
             if (dt.Rows.Count > 0)
             {
@@ -89,8 +89,9 @@ namespace StoreManager
                 cbSupplier.SelectedValue = row["sup_ID"];
 
                 EnableForm(true);
-                btnAdd.Visible = true;
-                btnDelete.Visible = true;
+
+                btnAdd.Visible = Session.IsAdmin();
+                btnDelete.Visible = Session.IsAdmin();
                 btnSave.Visible = false;
             }
             isDataLoading = false;
@@ -98,6 +99,8 @@ namespace StoreManager
 
         public void PrepareCreate()
         {
+            if (!Session.IsAdmin()) return;
+
             lstProduct.ClearSelected();
             selectedProductID = -1;
 
@@ -120,6 +123,8 @@ namespace StoreManager
 
         private void SaveProduct()
         {
+            if (!Session.IsAdmin()) return;
+
             if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtPrice.Text))
             {
                 MessageBox.Show("Tên và Giá bán là bắt buộc!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -137,11 +142,11 @@ namespace StoreManager
             if (selectedProductID == -1) // Thêm mới
             {
                 string sql = @"INSERT INTO Products (pro_name, pro_price, pro_count, type_ID, sup_ID, pro_description) 
-                       VALUES (@name, @price, @count, @type, @sup, @desc); 
-                       SELECT SCOPE_IDENTITY();";
+                               VALUES (@name, @price, @count, @type, @sup, @desc); 
+                               SELECT SCOPE_IDENTITY();";
 
                 SqlParameter[] parameters = new SqlParameter[]
-                 {
+                {
                     new SqlParameter("@name", txtName.Text.Trim()),
                     new SqlParameter("@price", double.Parse(txtPrice.Text.Trim())),
                     new SqlParameter("@count", count),
@@ -150,7 +155,7 @@ namespace StoreManager
                     new SqlParameter("@desc", txtDescription.Text.Trim())
                 };
 
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -165,8 +170,8 @@ namespace StoreManager
             else // Cập nhật
             {
                 string sql = @"UPDATE Products 
-                       SET pro_name=@name, pro_price=@price, pro_count=@count, type_ID=@type, sup_ID=@sup, pro_description=@desc 
-                       WHERE pro_ID=@id";
+                               SET pro_name=@name, pro_price=@price, pro_count=@count, type_ID=@type, sup_ID=@sup, pro_description=@desc 
+                               WHERE pro_ID=@id";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
@@ -179,7 +184,7 @@ namespace StoreManager
                     new SqlParameter("@id", selectedProductID)
                 };
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                if (DatabaseConnector.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
                     int tempID = selectedProductID;
 
@@ -193,6 +198,8 @@ namespace StoreManager
 
         private void DeleteProduct()
         {
+            if (!Session.IsAdmin()) return;
+
             if (selectedProductID == -1) return;
 
             if (MessageBox.Show("Xóa sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -200,7 +207,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM Products WHERE pro_ID = @id";
-                    DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedProductID) });
+                    DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedProductID) });
                     MessageBox.Show("Đã xóa!");
                     LoadListData();
                     ClearForm();
@@ -214,6 +221,7 @@ namespace StoreManager
                 }
             }
         }
+
         public void SelectProduct(int proID)
         {
             lstProduct.SelectedValue = proID;
@@ -231,7 +239,8 @@ namespace StoreManager
 
             txtSearch.TextChanged += (s, e) => LoadListData();
 
-            btnSort.Click += (s, e) => {
+            btnSort.Click += (s, e) =>
+            {
                 currentSortIndex = (currentSortIndex + 1) % sortModes.Length;
                 btnSort.Text = sortModes[currentSortIndex];
                 LoadListData();
@@ -240,8 +249,12 @@ namespace StoreManager
             txtPrice.KeyPress += NumberOnly_KeyPress;
             txtCount.KeyPress += NumberOnly_KeyPress;
 
-            EventHandler dataChanged = (s, e) => {
-                if (!isDataLoading) btnSave.Visible = true;
+            EventHandler dataChanged = (s, e) =>
+            {
+                if (!isDataLoading && Session.IsAdmin())
+                {
+                    btnSave.Visible = true;
+                }
             };
 
             txtName.TextChanged += dataChanged;
@@ -255,18 +268,22 @@ namespace StoreManager
             btnSave.Click += (s, e) => SaveProduct();
             btnDelete.Click += (s, e) => DeleteProduct();
 
-            // Quản lý Phân Loại MỚI
-            btnAddType.Click += (s, e) => {
+            // Quản lý Phân Loại
+            btnAddType.Click += (s, e) =>
+            {
+                if (!Session.IsAdmin()) return;
                 TypeEditorDialog dialog = new TypeEditorDialog(-1, "");
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     LoadTypeData();
-                    cbType.SelectedIndex = cbType.Items.Count - 1; // Chọn cái cuối cùng
+                    cbType.SelectedIndex = cbType.Items.Count - 1;
                 }
             };
 
             // Quản lý Phân Loại SỬA
-            btnEditType.Click += (s, e) => {
+            btnEditType.Click += (s, e) =>
+            {
+                if (!Session.IsAdmin()) return;
                 if (cbType.SelectedValue == null) return;
                 int currentId = (int)cbType.SelectedValue;
                 string currentName = cbType.Text;
@@ -275,12 +292,14 @@ namespace StoreManager
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     LoadTypeData();
-                    cbType.SelectedValue = currentId; // Chọn lại item vừa sửa
+                    cbType.SelectedValue = currentId;
                 }
             };
 
-            // Quản lý Thêm Nhà Cung Cấp (Chuyển nhanh sang tab UCSupplier)
-            btnAddSupplier.Click += (s, e) => {
+            // Quản lý Thêm Nhà Cung Cấp
+            btnAddSupplier.Click += (s, e) =>
+            {
+                if (!Session.IsAdmin()) return;
                 MainForm mainForm = this.FindForm() as MainForm;
                 if (mainForm != null)
                 {
@@ -296,16 +315,18 @@ namespace StoreManager
 
         private void EnableForm(bool enable)
         {
-            txtName.Enabled = enable;
-            txtPrice.Enabled = enable;
-            txtCount.Enabled = enable;
-            txtDescription.Enabled = enable;
-            cbType.Enabled = enable;
-            cbSupplier.Enabled = enable;
+            bool actualEnable = enable && Session.IsAdmin();
 
-            btnEditType.Visible = enable;
-            btnAddType.Visible = enable;
-            btnAddSupplier.Visible = enable;
+            txtName.Enabled = actualEnable;
+            txtPrice.Enabled = actualEnable;
+            txtCount.Enabled = actualEnable;
+            txtDescription.Enabled = actualEnable;
+            cbType.Enabled = actualEnable;
+            cbSupplier.Enabled = actualEnable;
+
+            btnEditType.Visible = actualEnable;
+            btnAddType.Visible = actualEnable;
+            btnAddSupplier.Visible = actualEnable;
         }
 
         private void ClearForm()
@@ -317,7 +338,8 @@ namespace StoreManager
             txtCount.Text = "";
             txtDescription.Text = "";
 
-            btnAdd.Visible = true;
+            // Chỉ Admin mới thấy nút Thêm mới
+            btnAdd.Visible = Session.IsAdmin();
             btnSave.Visible = false;
             btnDelete.Visible = false;
         }

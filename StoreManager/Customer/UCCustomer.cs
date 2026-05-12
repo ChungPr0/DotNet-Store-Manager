@@ -38,7 +38,7 @@ namespace StoreManager
 
             SqlParameter[] parameters = isSearching ? new[] { new SqlParameter("@keyword", "%" + keyword + "%") } : null;
 
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
             lstCustomer.DataSource = dt;
             lstCustomer.DisplayMember = "cus_name";
@@ -51,7 +51,7 @@ namespace StoreManager
         {
             isDataLoading = true;
             string sql = "SELECT * FROM Customers WHERE cus_ID = @id";
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@id", id) });
 
             if (dt.Rows.Count > 0)
             {
@@ -109,7 +109,7 @@ namespace StoreManager
                     new SqlParameter("@address", txtAddress.Text.Trim())
                 };
 
-                DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, parameters);
+                DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, parameters);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -132,7 +132,7 @@ namespace StoreManager
                     new SqlParameter("@id", selectedCusID)
                 };
 
-                if (DatabaseHelper.Instance.ExecuteNonQuery(sql, parameters) > 0)
+                if (DatabaseConnector.Instance.ExecuteNonQuery(sql, parameters) > 0)
                 {
                     int tempId = selectedCusID; // Lưu tạm ID trước khi reload
                     MessageBox.Show("Cập nhật thành công!");
@@ -151,7 +151,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM Customers WHERE cus_ID = @id";
-                    DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedCusID) });
+                    DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", selectedCusID) });
                     MessageBox.Show("Đã xóa!");
                     LoadListData();
                     ClearForm();

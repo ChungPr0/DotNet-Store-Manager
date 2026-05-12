@@ -78,7 +78,7 @@ namespace StoreManager
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = Color.FromArgb(52, 152, 219);
+            btnLogin.BackColor = Color.Green;
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatAppearance.BorderSize = 0;
             btnLogin.FlatStyle = FlatStyle.Flat;
@@ -88,13 +88,13 @@ namespace StoreManager
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(140, 45);
             btnLogin.TabIndex = 5;
-            btnLogin.Text = "VÀO";
+            btnLogin.Text = "ĐĂNG NHẬP";
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
             // btnExit
             // 
-            btnExit.BackColor = Color.FromArgb(149, 165, 166);
+            btnExit.BackColor = Color.Red;
             btnExit.Cursor = Cursors.Hand;
             btnExit.FlatAppearance.BorderSize = 0;
             btnExit.FlatStyle = FlatStyle.Flat;
@@ -140,7 +140,7 @@ namespace StoreManager
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.Label lblPass;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button btnExit;
+        private Custom3DButton btnLogin;
+        private Custom3DButton btnExit;
     }
 }

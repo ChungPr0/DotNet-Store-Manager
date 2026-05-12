@@ -48,7 +48,7 @@ namespace StoreManager
                 if (typeID == -1) // INSERT
                 {
                     string sql = "INSERT INTO ProductTypes (type_name) VALUES (@name)";
-                    if (DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@name", newName) }) > 0)
+                    if (DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@name", newName) }) > 0)
                     {
                         MessageBox.Show("Thêm mới thành công!");
                         IsUpdated = true;
@@ -59,7 +59,7 @@ namespace StoreManager
                 else // UPDATE
                 {
                     string sql = "UPDATE ProductTypes SET type_name = @name WHERE type_ID = @id";
-                    if (DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] {
+                    if (DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] {
                         new SqlParameter("@name", newName),
                         new SqlParameter("@id", typeID)
                     }) > 0)
@@ -87,7 +87,7 @@ namespace StoreManager
                 try
                 {
                     string sql = "DELETE FROM ProductTypes WHERE type_ID = @id";
-                    if (DatabaseHelper.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", typeID) }) > 0)
+                    if (DatabaseConnector.Instance.ExecuteNonQuery(sql, new[] { new SqlParameter("@id", typeID) }) > 0)
                     {
                         MessageBox.Show("Đã xóa thành công!");
                         IsUpdated = true;

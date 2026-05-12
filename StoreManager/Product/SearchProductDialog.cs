@@ -4,11 +4,12 @@ using StoreManager.Utils;
 
 namespace StoreManager
 {
-    public partial class SearchCustomerDialog : Form
+    public partial class SearchProductDialog : Form
     {
-        public int SelectedCustomerID { get; private set; } = -1;
+        public int SelectedProductID { get; private set; } = -1;
+        public string SelectedProductName { get; private set; } = "";
 
-        public SearchCustomerDialog()
+        public SearchProductDialog()
         {
             InitializeComponent();
         }
@@ -42,12 +43,12 @@ namespace StoreManager
                 return;
             }
 
-            string sql = "SELECT cus_ID, cus_name + ' - ' + cus_phone AS display_text FROM Customers WHERE (cus_name LIKE @kw OR cus_phone LIKE @kw) AND cus_ID != 1";
-            DataTable dt = DatabaseHelper.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@kw", "%" + keyword + "%") });
+            string sql = "SELECT pro_ID, pro_name, pro_name + ' (Tồn: ' + CAST(pro_count AS VARCHAR) + ')' AS display_text FROM Products WHERE pro_name LIKE @kw AND pro_count > 0";
+            DataTable dt = DatabaseConnector.Instance.ExecuteQuery(sql, new[] { new SqlParameter("@kw", "%" + keyword + "%") });
 
             listResults.DataSource = dt;
             listResults.DisplayMember = "display_text";
-            listResults.ValueMember = "cus_ID";
+            listResults.ValueMember = "pro_ID";
             listResults.ClearSelected();
         }
 
@@ -55,13 +56,17 @@ namespace StoreManager
         {
             if (listResults.SelectedValue != null)
             {
-                SelectedCustomerID = (int)listResults.SelectedValue;
+                SelectedProductID = (int)listResults.SelectedValue;
+
+                DataRowView row = (DataRowView)listResults.SelectedItem;
+                SelectedProductName = row["pro_name"].ToString();
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn một khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn một sản phẩm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
