@@ -1,6 +1,6 @@
--- ==========================================
--- 0. TẠO DATABASE (Nếu chưa có)
--- ==========================================
+-- ===============
+-- 0. TẠO DATABASE
+-- ===============
 USE master;
 GO
 
@@ -13,9 +13,9 @@ GO
 USE StoreManager;
 GO
 
--- ==========================================
--- 1. XÓA BẢNG CŨ (Xóa bảng con trước, bảng cha sau)
--- ==========================================
+-- ==============
+-- 1. XÓA BẢNG CŨ
+-- ==============
 DROP TABLE IF EXISTS Invoice_details;
 DROP TABLE IF EXISTS Invoices;
 DROP TABLE IF EXISTS Products;
@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Suppliers;
 GO
 
--- ==========================================
--- 2. TẠO CẤU TRÚC BẢNG MỚI (ĐÃ TINH GỌN)
--- ==========================================
+-- ========================
+-- 2. TẠO CẤU TRÚC BẢNG MỚI
+-- ========================
 
 -- Bảng Nhà cung cấp
 CREATE TABLE Suppliers (
@@ -47,7 +47,7 @@ CREATE TABLE Customers (
     cus_phone VARCHAR(20)
 );
 
--- Bảng Nhân viên (Đã đổi Staffs -> Employees)
+-- Bảng Nhân viên
 CREATE TABLE Employees (
     emp_ID INT IDENTITY(1,1) PRIMARY KEY,
     emp_name NVARCHAR(255) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE Employees (
     emp_start_date DATE DEFAULT CAST(GETDATE() AS DATE),
     emp_username VARCHAR(50) UNIQUE,
     emp_password VARCHAR(255),
-    emp_role VARCHAR(50) DEFAULT 'Employee' -- Chỉ còn 'Admin' hoặc 'Employee'
+    emp_role VARCHAR(50) DEFAULT 'Employee' -- 'Admin' hoặc 'Employee'
 );
 
 -- Bảng Loại sản phẩm
@@ -80,7 +80,7 @@ CREATE TABLE Products (
     FOREIGN KEY (sup_ID) REFERENCES Suppliers(sup_ID)
 );
 
--- Bảng Hóa đơn (Đã bỏ cột dis_ID, đổi sta_ID thành emp_ID)
+-- Bảng Hóa đơn
 CREATE TABLE Invoices (
     inv_ID INT IDENTITY(1,1) PRIMARY KEY,
     emp_ID INT,
@@ -103,9 +103,9 @@ CREATE TABLE Invoice_details (
 );
 GO
 
--- ==========================================
--- 3. CHÈN DỮ LIỆU MẪU (SQL SERVER VERSION)
--- ==========================================
+-- ===================
+-- 3. CHÈN DỮ LIỆU MẪU
+-- ===================
 
 -- 3.1. Nhà cung cấp (Suppliers)
 INSERT INTO Suppliers (sup_name, sup_address, sup_phone, sup_description) VALUES
@@ -209,7 +209,7 @@ INSERT INTO Customers (cus_name, cus_address, cus_phone) VALUES
 (N'Đinh Văn Tài', N'147 Bình Thới, Q.11, TP.HCM', '0976789012'),
 (N'Lâm Thị Uyên', N'159 Minh Phụng, Q.11, TP.HCM', '0987890123');
 
--- 3.5. Nhân viên (Employees - Đã cập nhật Tên Bảng và Quyền)
+-- 3.5. Nhân viên (Employees)
 INSERT INTO Employees (emp_name, emp_date_of_birth, emp_phone, emp_address, emp_salary, emp_start_date, emp_username, emp_password, emp_role) VALUES
 (N'Nguyễn Quản Trị', '1990-01-01', '0909999999', N'TP.HCM', 20000000, '2020-01-01', 'admin', '123', 'Admin'),
 (N'Trần Quản Lý', '1992-05-15', '0908888888', N'TP.HCM', 15000000, '2021-03-10', 'manager', '123', 'Employee'),
@@ -219,7 +219,6 @@ INSERT INTO Employees (emp_name, emp_date_of_birth, emp_phone, emp_address, emp_
 (N'Vũ Kho 2', '1996-10-10', '0904444444', N'TP.HCM', 8500000, '2022-11-20', 'storage2', '123', 'Employee');
 
 -- 3.6. Hóa đơn (Invoices) & Chi tiết (Invoice_details)
--- (Đã xóa các trường liên quan đến Khuyến mãi và điều chỉnh hàm thời gian GETDATE)
 
 -- Hóa đơn 1
 INSERT INTO Invoices (emp_ID, cus_ID, inv_price, inv_date) VALUES (3, 2, 250000, '2023-12-20 10:30:00');
